@@ -1,0 +1,32 @@
+{
+  "name": "@zachjxyz/jvn",
+  "version": "0.1.1",
+  "description": "Spec-driven development with Claude Code. /spec, /design, /build.",
+  "bin": {
+    "jvn": "bin/jvn.mjs"
+  },
+  "type": "module",
+  "files": [
+    "bin/",
+    "template/"
+  ],
+  "keywords": [
+    "claude-code",
+    "spec-driven-development",
+    "spec-kit",
+    "ai",
+    "agents",
+    "von-neumann",
+    "tdd",
+    "ai-engineering"
+  ],
+  "author": "Zach J",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zachjxyz/jvn.git"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
