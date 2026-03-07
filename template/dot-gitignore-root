@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Next.js
+.next/
+out/
+
+# Vercel
+.vercel
+
+# Drizzle
+drizzle/meta/
+
+# Claude Code
+.claude/settings.local.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

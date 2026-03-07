@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit(*)",
+      "Write(*)",
+      "Bash",
+      "WebFetch(domain:*)",
+      "WebSearch"
+    ],
+    "deny": [],
+    "ask": [
+      "Bash(rm *)",
+      "Bash(rmdir *)",
+      "Bash(git push *)",
+      "Bash(git reset *)",
+      "Bash(npm publish *)"
+    ]
+  },
+  "plansDirectory": "./specs",
+  "attribution": {
+    "commit": "Co-Authored-By: Claude <noreply@anthropic.com>",
+    "pr": "Generated with [Claude Code](https://claude.ai/code)"
+  },
+  "env": {
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "80"
+  }
+}
