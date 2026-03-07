@@ -1,6 +1,6 @@
 {
   "name": "@zachjxyz/jvn",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Spec-driven development with Claude Code. /spec, /design, /build.",
   "bin": {
     "jvn": "bin/jvn.mjs"
