@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { execSync, spawn } from 'node:child_process';
-import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { appendFileSync, cpSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { platform, homedir } from 'node:os';
@@ -57,6 +57,10 @@ const RENAME_MAP = {
   'dot-gitignore-root': '.gitignore',
   'dot-mcp.json': '.mcp.json',
 };
+
+// ── .gitignore entries jvn must ensure exist ─
+
+const GITIGNORE_ENTRIES = ['.agents', '.claude', '.specify', 'constitution.md', 'reports/'];
 
 // ── Spinner ─────────────────────────────────
 
@@ -153,6 +157,27 @@ function copyDirRecursive(src, dest, { force = false, dryRun = false } = {}) {
   return { copied, skipped };
 }
 
+function ensureGitignoreEntries(dir, { dryRun = false } = {}) {
+  const gitignorePath = join(dir, '.gitignore');
+  const existing = existsSync(gitignorePath) ? readFileSync(gitignorePath, 'utf8') : '';
+  const lines = existing.split('\n').map((l) => l.trim());
+
+  const missing = GITIGNORE_ENTRIES.filter((entry) => !lines.includes(entry));
+  if (missing.length === 0) return { added: 0 };
+
+  if (dryRun) return { added: missing.length };
+
+  const block = `\n# jvn\n${missing.join('\n')}\n`;
+
+  if (existing) {
+    appendFileSync(gitignorePath, block);
+  } else {
+    writeFileSync(gitignorePath, block.trimStart());
+  }
+
+  return { added: missing.length };
+}
+
 // ── Commands ────────────────────────────────
 
 function printHelp() {
@@ -227,6 +252,18 @@ async function runSetup({ dryRun = false, force = false, skipSkills = false, ski
     ok(`Copied ${copied} files (skipped ${skipped} existing)`);
   } else {
     info(`Would copy ${copied} files (skip ${skipped} existing)`);
+  }
+
+  // ── Ensure .gitignore entries ──────────
+
+  const { added: gitignoreAdded } = ensureGitignoreEntries(process.cwd(), { dryRun });
+
+  if (gitignoreAdded > 0) {
+    if (!dryRun) ok(`Added ${gitignoreAdded} entries to .gitignore`);
+    else info(`Would add ${gitignoreAdded} entries to .gitignore`);
+  } else {
+    if (!dryRun) ok('.gitignore already has jvn entries');
+    else info('.gitignore already has jvn entries');
   }
 
   // ── Install Skills ─────────────────────

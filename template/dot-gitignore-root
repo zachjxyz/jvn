@@ -17,8 +17,12 @@ out/
 # Drizzle
 drizzle/meta/
 
-# Claude Code
-.claude/settings.local.json
+# jvn
+.agents
+.claude
+.specify
+constitution.md
+reports/
 
 # OS
 .DS_Store
