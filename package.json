@@ -8,7 +8,9 @@
   "type": "module",
   "files": [
     "bin/",
-    "template/"
+    "template/",
+    "stacks/",
+    "adapters/"
   ],
   "keywords": [
     "claude-code",
